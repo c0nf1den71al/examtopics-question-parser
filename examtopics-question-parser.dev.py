@@ -86,6 +86,19 @@ exam = exams[examChoice - 1]
 
 examQuestionsPage = r.get("https://www.examtopics.com"+exam["link"]+"view", headers=headers)
 examQuestionsSoup = BeautifulSoup(examQuestionsPage.content, "html.parser") # Soup HTML Parser
-# examQuestionsRaw = examQuestionsSoup.find_all("a", class_="popular-exam-link") # Select all anchors where the class is popular-exam-link
+examQuestionsRaw = examQuestionsSoup.find_all("div", class_="exam-question-card") # Select all anchors where the class is popular-exam-link
 
-print(examQuestionsSoup)
+examQuestions = []
+
+for examQuestionRaw in examQuestionsRaw:
+    examQuestion = {}
+
+    # Get question ID (for cross reference)
+    examQuestionIdRaw = examQuestionRaw.find("div", class_="card-header").text
+    examQuestion["id"] = re.findall("#[0-9]*", examQuestionIdRaw)[0].strip()
+
+    examQuestion["body"] = examQuestionRaw.find("p", class_="card-text").text.strip()
+    
+    examQuestions.append(examQuestion)
+
+print(examQuestions)
