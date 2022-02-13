@@ -51,6 +51,7 @@ for rawProvider in examProvidersRaw:
 
 print("\n"*100)
 
+# Display exam providers
 for x in range(len(examProviders)):
     print("[{}] {} {}".format(str(x+1), examProviders[x]["title"], examProviders[x]["exams"]))
 
@@ -78,17 +79,19 @@ for rawExam in examsRaw:
 
 print("\n"*100)
 
+# Display exams available
 for x in range(len(exams)):
     print("[{}] {}".format(str(x+1), exams[x]["title"]))
 
 examChoice = int(input("\nPlease select an exam: "))
 exam = exams[examChoice - 1]
 
+# Get questions from exam
+examQuestions = []
+
 examQuestionsPage = r.get("https://www.examtopics.com"+exam["link"]+"view", headers=headers)
 examQuestionsSoup = BeautifulSoup(examQuestionsPage.content, "html.parser") # Soup HTML Parser
 examQuestionsRaw = examQuestionsSoup.find_all("div", class_="exam-question-card") # Select all anchors where the class is popular-exam-link
-
-examQuestions = []
 
 for examQuestionRaw in examQuestionsRaw:
     examQuestion = {}
@@ -97,8 +100,48 @@ for examQuestionRaw in examQuestionsRaw:
     examQuestionIdRaw = examQuestionRaw.find("div", class_="card-header").text
     examQuestion["id"] = re.findall("#[0-9]*", examQuestionIdRaw)[0].strip()
 
+    # Get the body of the question
     examQuestion["body"] = examQuestionRaw.find("p", class_="card-text").text.strip()
     
+    # Get question choice
+    examQuestionChoicesRaw = examQuestionRaw.find_all("li", class_="multi-choice-item")
+    examQuestion["choices"] = [re.sub("\s\s+", " ", choice.text.strip()) for choice in examQuestionChoicesRaw]
+
+    # Get question answer
+    examQuestion["answer"] = examQuestionRaw.find("span", class_="correct-answer").text.strip()
+
     examQuestions.append(examQuestion)
 
-print(examQuestions)
+score = 0 
+# For each question, print the question number and question.
+for x in range(0, len(examQuestions)):
+    print("\n"*100)
+    print("""
+{}/{} ({}).
+
+{}\n""".format(x + 1, len(examQuestions), examQuestions[x]["id"], examQuestions[x]["body"]))
+
+    # Print each choice
+    for choice in examQuestions[x]["choices"]:
+        print(choice)
+    
+    answer = input("\n> ")
+
+    # Display correct answer
+    print("\n"*100)
+    for choice in examQuestions[x]["choices"]:
+        print(choice)
+    print("""\n
+Your input: {}
+Correct Answer: {}
+    """.format(answer.upper(), examQuestions[x]["answer"]))
+
+    userNext = input("\n(Press enter to continiue)")
+
+    # If correct +1 to score
+    if answer.upper() == examQuestions[x]["answer"]:
+        score += 1
+
+# Print results
+print("\n"*100)
+print("Results {}/{}".format(int(score), len(examQuestions)))
