@@ -24,8 +24,8 @@ git clone https://github.com/d4rkflam1ngo/examtopics-question-parser && cd examt
 6. Customise the script where necersarry, change the file name and the passing percentage.
 7. Launch the script by running:
 ```
-python3 examtopics-question-parser.py
+python3 examtopics-question-parser.old.py
 ```
 
 ### Requested Features
-- [ ] Web scraper (In progress, [see dev script](https://github.com/d4rkflam1ngo/examtopics-question-parser/blob/main/examtopics-question-parser.dev.py))
+- [ ] Web scraper (In progress, [see new script](https://github.com/d4rkflam1ngo/examtopics-question-parser/blob/main/examtopics-question-parser.py))
