@@ -20,7 +20,7 @@ git clone https://github.com/d4rkflam1ngo/examtopics-question-parser && cd examt
 
 ![Custom View Settings](https://github.com/d4rkflam1ngo/examtopics-question-parser/blob/main/custom-view-settings.png)
 
-5. Once the questions have rendered, select all the text on the page `Ctrl-A`. Paste this text into a file and remove the text from the page header and footer. (See the [example file](https://github.com/d4rkflam1ngo/examtopics-question-parser/blob/main/example-dump.txt) for what the final dump should look like).
+5. Once the questions have rendered, select all the text on the page `Ctrl-A`. Paste this text into a file and remove the text from the page header and footer.
 6. Customise the script where necersarry, change the file name and the passing percentage.
 7. Launch the script by running:
 ```
