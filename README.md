@@ -1,5 +1,5 @@
 # Examtopics Question Parser
-A python script to parse questions from ExamTopics question dumps. The script turns the raw input into an interactive quiz.
+A python script to parse questions from ExamTopics question dumps. The script turns the raw input into an interactive quiz. This script is a proof of concept and is for educational purposes only. I take no credit or responsibility for the content found on ExamTopics.
 
 ### Currently Supported Features
 * Parses a raw question dump from ExamTopics into a quiz.
